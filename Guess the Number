@@ -1,0 +1,18 @@
+import random
+
+print("Let's play 'Guess the Number' from 1 to 5")
+print("Enter a number:")
+
+# Generate a random number between 1 and 5
+i = random.randint(1, 5)
+
+# Read the number entered by the user
+n = int(input())
+
+# Loop until the number is guessed correctly
+while i != n:
+    print("Try again")
+    n = int(input())
+
+# Exiting the loop means the number was guessed correctly
+print("You guessed it!")
