@@ -1,0 +1,13 @@
+def Collatz(number):
+    if number % 2 == 0:
+        number = number // 2
+    else:
+        number = 3 * number + 1
+    return number
+    
+n = int(input())
+while Collatz(n) != 1:
+    n = Collatz(n)
+    Collatz(n)
+    print(n)
+print(1)
