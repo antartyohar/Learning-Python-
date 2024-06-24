@@ -1,0 +1,65 @@
+#Conway's Game of Life
+
+import random
+import time
+
+def draw(place):
+    for row in place:
+        for k in row:
+            if k == 1:
+                print('Ж', end=' ')
+            elif k == 0:
+                print('•', end=' ')
+        print()
+
+def count_neighbors(grid, x, y):
+    count = 0
+    for i in range(x - 1, x + 2):
+        for j in range(y - 1, y + 2):
+            if (i == x and j == y) or i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]):
+                continue
+            if grid[i][j] == 1:
+                count += 1
+    return count
+
+def has_one(grid):
+    return any(1 in row for row in grid)
+
+def is_same(grid1, grid2):
+    for i in range(len(grid1)):
+        for j in range(len(grid1[0])):
+            if grid1[i][j] != grid2[i][j]:
+                return False
+    return True
+
+print('Введите размерность поля 9 и более:')
+n = int(input())
+if n >= 9:
+    conway = [[random.randint(0, 1) for _ in range(n)] for _ in range(n)]
+    previous_conway = [[0] * n for _ in range(n)]
+    pre_previous_conway = [[0] * n for _ in range(n)]
+
+while has_one(conway) and not is_same(conway, previous_conway) and not is_same(conway, pre_previous_conway):
+    draw(conway)
+    new_conway = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            neighbors = count_neighbors(conway, i, j)
+            if conway[i][j] == 1 and (neighbors == 2 or neighbors == 3):
+                new_conway[i][j] = 1
+            elif conway[i][j] == 0 and neighbors == 3:
+                new_conway[i][j] = 1
+    
+    pre_previous_conway = previous_conway
+    previous_conway = conway
+    conway = new_conway
+
+    if n < 18:
+        time.sleep(1)  # Задержка в 0.5 секунду между итерациями для удобства наблюдения
+    elif n < 30:
+    	time.sleep(0.5)
+    else:
+    	time.sleep(0.25)
+    print("\033[H\033[J", end="")  # Очистка экрана для обновления состояния поля
+
+print("Игра окончена.")
