@@ -1,4 +1,4 @@
-#Conway's Game of Life
+# Conway's Game of Life
 
 import random
 import time
@@ -14,11 +14,14 @@ def draw(place):
 
 def count_neighbors(grid, x, y):
     count = 0
+    n = len(grid)
     for i in range(x - 1, x + 2):
         for j in range(y - 1, y + 2):
-            if (i == x and j == y) or i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]):
+            if i == x and j == y:
                 continue
-            if grid[i][j] == 1:
+            ni = i % n  # Цикличность по горизонтали
+            nj = j % n  # Цикличность по вертикали
+            if grid[ni][nj] == 1:
                 count += 1
     return count
 
@@ -32,12 +35,11 @@ def is_same(grid1, grid2):
                 return False
     return True
 
-print('Введите размерность поля 9 и более:')
+print('Введите размерность поля:')
 n = int(input())
-if n >= 9:
-    conway = [[random.randint(0, 1) for _ in range(n)] for _ in range(n)]
-    previous_conway = [[0] * n for _ in range(n)]
-    pre_previous_conway = [[0] * n for _ in range(n)]
+conway = [[random.randint(0, 1) for _ in range(n)] for _ in range(n)]
+previous_conway = [[0] * n for _ in range(n)]
+pre_previous_conway = [[0] * n for _ in range(n)]
 
 while has_one(conway) and not is_same(conway, previous_conway) and not is_same(conway, pre_previous_conway):
     draw(conway)
@@ -55,11 +57,11 @@ while has_one(conway) and not is_same(conway, previous_conway) and not is_same(c
     conway = new_conway
 
     if n < 18:
-        time.sleep(1)  # Задержка в 0.5 секунду между итерациями для удобства наблюдения
+        time.sleep(1)  # Задержка в 1 секунду между итерациями для удобства наблюдения
     elif n < 30:
-    	time.sleep(0.5)
+        time.sleep(0.5)
     else:
-    	time.sleep(0.25)
+        time.sleep(0.25)
     print("\033[H\033[J", end="")  # Очистка экрана для обновления состояния поля
 
 print("Игра окончена.")
