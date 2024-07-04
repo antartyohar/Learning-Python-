@@ -1,0 +1,25 @@
+import pyinputplus as pyip
+import random
+
+print(' Skolko budem reshat zada4?')
+questions = pyip.inputInt()
+print()
+print('Na4niom!')
+print()
+right = 0
+for i in range(1, questions + 1):
+	n1 = random.randint(0, 9)
+	n2 = random.randint(0, 9)
+	r = n1 * n2
+	print(' ',i, '/', questions, ') Skolko budet ', n1, ' * ', n2, '?', sep='')
+	rp = pyip.inputInt()
+	if rp == r:
+		print(' Verno!')
+		print()
+		right += 1
+	else:
+		print(' No!')
+		print()
+print(' Verno', right, 'iz', questions)
+if right == questions:
+	print(' MOLODEC!')
