@@ -1,0 +1,29 @@
+import os
+
+def get_files_and_sizes(directory):
+    files_and_sizes = {}
+    for root, _, files in os.walk(directory):
+        for file in files:
+            file_path = os.path.join(root, file)
+            if os.path.isfile(file_path):
+                file_size = os.path.getsize(file_path)
+                files_and_sizes[file_path] = file_size
+    return files_and_sizes
+
+def write_sorted_sizes_to_file(files_and_sizes, output_file):
+    sorted_files_and_sizes = sorted(files_and_sizes.items(), key=lambda item: item[1], reverse=True)
+    with open(output_file, 'w') as f:
+        for file, size in sorted_files_and_sizes:
+            f.write(f'{file}: {size} bytes\n')
+
+# Укажите директорию, которую хотите исследовать
+directory = '/storage/emulated/0/DCIM'
+
+# Получение словаря с именами файлов и их размерами
+files_and_sizes = get_files_and_sizes(directory)
+
+# Запись отсортированных файлов и их размеров в файл size.txt
+output_file = 'size.txt'
+write_sorted_sizes_to_file(files_and_sizes, output_file)
+
+print(f'Sorted file sizes have been written to {output_file}')
