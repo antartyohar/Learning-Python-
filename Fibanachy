@@ -1,0 +1,42 @@
+a, b, c, d = 1,1,1,1
+pr = True
+count = 0
+countlen, countlenlast = 0,1
+
+print(" Fibanachi")
+print(" ")
+print("      ",1)
+
+while count < 10000:
+    
+    if count < 10:
+        print(" ", end="")
+        
+    c = a+b
+#    print(" ", count, " ",c)
+
+    if b/a == a/d and count > 10:
+        if pr == True:
+            print(" дальше коэфициент стабильный ", c/b)
+            pr = False
+    else:
+            if b/a != a/d and pr == False:
+                print(" коэфициент изменился", c/b)
+                pr = True
+            
+    if len(str(c)) == len(str(b)):
+        countlen += 1
+        countlenlast += 1
+    else:
+        if countlen != 5 and count > 10:
+            print (" на", countlenlast, "шаге прошел разрядность на 1 шаг меньше")
+            countlen = 1
+            countlenlast = 1
+        else:
+            countlen = 1
+            countlenlast += 1
+               
+    d = a
+    a = b
+    b = c
+    count += 1
